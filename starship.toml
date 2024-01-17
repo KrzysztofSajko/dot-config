@@ -1,5 +1,23 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """
+$os\
+$directory\
+$git_branch$git_status\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+$docker_context\
+$time\
+$line_break$username$character\
+"""
+
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 
@@ -22,10 +40,10 @@ format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
 format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
 
 [git_branch]
-format = '\[[$symbol$branch]($style)\]'
+format = '[$symbol$branch]($style)'
 
 [git_status]
-format = '([\[$all_status$ahead_behind\]]($style))'
+format = '( [\[$all_status$ahead_behind\]]($style))'
 
 [golang]
 format = '\[[$symbol($version)]($style)\]'
