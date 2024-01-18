@@ -15,7 +15,7 @@ $haskell\
 $python\
 $docker_context\
 $time\
-$line_break$username$character\
+$line_break$username $character\
 """
 
 [aws]
@@ -97,8 +97,17 @@ format = '\[[as $symbol]\]'
 [terraform]
 format = '\[[$symbol$workspace]($style)\]'
 
+
 [time]
-format = '\[[$time]($style)\]'
+format = ' [$time]($style)'
+disabled = false
 
 [username]
-format = '\[[$user]($style)\]'
+format = '[$user]($style)'
+show_always = true
+style_user = "yellow bold"
+style_root = "red bold"
+
+[character]
+success_symbol = "[->](bold green)"
+error_symbol = "[->](bold red)"
