@@ -1,0 +1,2 @@
+ansible-lint>=24.2.0
+github3.py>=1.0.0a3
