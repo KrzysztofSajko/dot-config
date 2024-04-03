@@ -66,6 +66,10 @@ function ensureAnsibleRequirements(){
 
 function runAnsiblePlaybooks(){
     echo "[x] Running Ansible playbooks..."
+    # running it with sudo instead of -K
+    # would be less annoying, however
+    # running it with sudo somehow fucks things up
+    # so here we are
     ansible-playbook "${ANSIBLE_DIR}/${ANSIBLE_MAIN_PLAYBOOK}" -K
 }
 

@@ -1,0 +1,17 @@
+- name: Neovim setup
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Download package
+      become: true
+      ansible.builtin.unarchive:
+        src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+        dest: /opt
+        remote_src: true
+      register: package
+
+    - name: Add entry to bashrc
+      ansible.builtin.lineinfile:
+        path: "$HOME/.bashrc"
+        line: 'export PATH="$PATH:/opt/nvim-linux64/bin" # managed by Ansible'
