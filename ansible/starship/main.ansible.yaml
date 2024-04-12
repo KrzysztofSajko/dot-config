@@ -62,7 +62,7 @@
 
     - name: Check if starship.toml exists
       ansible.builtin.stat:
-        path: "{{ playbook_dir }}/../starship/starship.toml"
+        path: "{{ playbook_dir }}/../../starship/starship.toml"
       register: starship_config
 
     - name: Create link to starship config in .config
