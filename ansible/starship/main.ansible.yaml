@@ -1,7 +1,8 @@
 - name: Starship setup
   hosts: localhost
   connection: local
-
+  vars:
+    config_path: ../../configs/starship
   tasks:
     - name: Get latest starship release
       community.general.github_release:
@@ -62,7 +63,7 @@
 
     - name: Check if starship.toml exists
       ansible.builtin.stat:
-        path: "{{ playbook_dir }}/../../starship/starship.toml"
+        path: "{{ playbook_dir }}/{{ config_path }}/starship.toml"
       register: starship_config
 
     - name: Create link to starship config in .config

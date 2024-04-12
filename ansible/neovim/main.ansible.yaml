@@ -1,7 +1,8 @@
 - name: Neovim setup
   hosts: localhost
   connection: local
-
+  vars:
+    config_path: ../../configs/neovim
   tasks:
     - name: Download package
       become: true
@@ -18,7 +19,7 @@
 
     - name: Check if neovim config exists
       ansible.builtin.stat:
-        path: "{{ playbook_dir }}/../../neovim"
+        path: "{{ playbook_dir }}/{{ config_path }}"
       register: starship_config
 
     - name: Create link to neovim config in .config
