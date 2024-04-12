@@ -1,0 +1,29 @@
+- name: Neovim setup
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Download package
+      become: true
+      ansible.builtin.unarchive:
+        src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+        dest: /opt
+        remote_src: true
+      register: package
+
+    - name: Add entry to bashrc
+      ansible.builtin.lineinfile:
+        path: "$HOME/.bashrc"
+        line: 'export PATH="$PATH:/opt/nvim-linux64/bin" # managed by Ansible'
+
+    - name: Check if neovim config exists
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/../../neovim"
+      register: starship_config
+
+    - name: Create link to neovim config in .config
+      ansible.builtin.file:
+        path: ~/.config/nvim
+        state: link
+        src: "{{ starship_config.stat.path }}"
+      when: starship_config.stat.exists

@@ -1,2 +1,4 @@
 - name: Starship
   ansible.builtin.import_playbook: starship/main.ansible.yaml
+- name: Neovim
+  ansible.builtin.import_playbook: neovim/main.ansible.yaml
