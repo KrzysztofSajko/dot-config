@@ -43,7 +43,7 @@ function setupPythonForAnsible(){
         echo "[-] Python [${PYTHON_VERSION}] not found, installing..."
         sudo add-apt-repository ppa:deadsnakes/ppa --yes
         sudo apt update
-        sudo apt install ${PYTHON_VERSION} ${PYTHON_VERSION}-venv
+        sudo apt install ${PYTHON_VERSION} ${PYTHON_VERSION}-venv python3-debian
     fi
     # ensure venv created
     if [ -d "${VENV_DIR}" ]
