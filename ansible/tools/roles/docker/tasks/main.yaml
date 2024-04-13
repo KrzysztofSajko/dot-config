@@ -20,3 +20,25 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
+
+- name: Get current user
+  ansible.builtin.command:
+    cmd: whoami
+  register: user_name
+  changed_when: false
+
+- name: Assign docker group to user
+  block:
+    - name: Ensure docker group
+      become: true
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Add user to group
+      become: true
+      ansible.builtin.user:
+        user: "{{ user_name.stdout | trim }}"
+        append: true
+        groups:
+          - docker
