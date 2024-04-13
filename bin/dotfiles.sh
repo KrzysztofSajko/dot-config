@@ -77,7 +77,7 @@ function runAnsiblePlaybooks(){
 function createSSHKey(){
     local filename=$1
     ssh-keygen -t "${SSH_TYPE}" -f "${filename}" -N "${SSH_PASS}" -C "$USER/$HOSTNAME"
-    chmod 600 "${1}"
+    chmod 600 "${filename}"
 }
 
 function setupSSH(){
