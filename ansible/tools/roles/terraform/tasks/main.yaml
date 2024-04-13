@@ -1,18 +1,13 @@
 # code: language=ansible
-- name: Setup Ansible repo in apt
+- name: Setup Hashicorp repo in apt
   become: true
-  block:
-    - name: Get apt key for hashicorp
-      ansible.builtin.apt_key:
-        state: present
-        url: https://apt.releases.hashicorp.com/gpg
-        keyring: "{{ terraform_key_file }}"
-
-    - name: Add apt repository for hashicorp
-      ansible.builtin.apt_repository:
-        state: present
-        repo: "deb [signed-by={{ terraform_key_file }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
-        filename: "{{ terraform_sourcelist_name }}"
+  ansible.builtin.deb822_repository:
+    name: hashicorp
+    types: deb
+    uris: "{{ terraform_hashicorp_uri }}"
+    signed_by: "{{ terraform_hashicorp_uri }}/gpg"
+    suites: "{{ ansible_distribution_release }}"
+    components: main
 
 - name: Install terraform
   become: true
