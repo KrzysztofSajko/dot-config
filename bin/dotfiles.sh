@@ -57,6 +57,7 @@ function setupPythonForAnsible(){
     echo "[x] Ensuring requirements are installed..."
     source "${VENV_DIR}/bin/activate"
     pip3 install -qr "${REQUIREMENTS_PATH}"
+    deactivate
 }
 
 function ensureAnsibleRequirements(){
