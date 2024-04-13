@@ -1,0 +1,2 @@
+# code: language=ansible
+terraform_hashicorp_uri: https://apt.releases.hashicorp.com

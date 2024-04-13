@@ -1,0 +1,14 @@
+# code: language=ansible
+- name: Setup of general tools
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Install terraform
+      ansible.builtin.include_role:
+        name: terraform
+      when: install_terraform is defined and install_terraform
+
+    - name: Install docker
+      ansible.builtin.include_role:
+        name: docker
+      when: install_docker is defined and install_docker

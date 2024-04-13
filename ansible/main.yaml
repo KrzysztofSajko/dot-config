@@ -1,0 +1,10 @@
+# code: language=ansible
+- name: Starship
+  ansible.builtin.import_playbook: starship/main.yaml
+- name: Neovim
+  ansible.builtin.import_playbook: neovim/main.yaml
+- name: Tools
+  ansible.builtin.import_playbook: tools/main.yaml
+  vars:
+    install_terraform: true
+    install_docker: true

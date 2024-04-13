@@ -12,7 +12,7 @@ SSH_PASS=""
 # Ansible setup
 ANSIBLE_REPOSITORY="ppa:ansible/ansible"
 ANSIBLE_DIR="${DIRNAME}/../ansible"
-ANSIBLE_MAIN_PLAYBOOK="main.ansible.yaml"
+ANSIBLE_MAIN_PLAYBOOK="main.yaml"
 
 PYTHON_VERSION="python3.12"
 PYTHON_REPOSITORY="ppa:deadsnakes/ppa"
@@ -43,7 +43,7 @@ function setupPythonForAnsible(){
         echo "[-] Python [${PYTHON_VERSION}] not found, installing..."
         sudo add-apt-repository ppa:deadsnakes/ppa --yes
         sudo apt update
-        sudo apt install ${PYTHON_VERSION} ${PYTHON_VERSION}-venv
+        sudo apt install ${PYTHON_VERSION} ${PYTHON_VERSION}-venv python3-debian
     fi
     # ensure venv created
     if [ -d "${VENV_DIR}" ]
@@ -57,6 +57,7 @@ function setupPythonForAnsible(){
     echo "[x] Ensuring requirements are installed..."
     source "${VENV_DIR}/bin/activate"
     pip3 install -qr "${REQUIREMENTS_PATH}"
+    deactivate
 }
 
 function ensureAnsibleRequirements(){
