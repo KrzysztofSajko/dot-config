@@ -1,0 +1,38 @@
+# code: language=ansible
+- name: Setup Docker repo in apt
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: "{{ docker_uri }}"
+    signed_by: "{{ docker_uri }}/gpg"
+    architectures: "{{ ansible_architecture }}"
+    suites: "{{ ansible_distribution_release }}"
+    components: main
+
+  # become: true
+  # block:
+  #   - name: Get apt key for docker
+  #     ansible.builtin.apt_key:
+  #       state: present
+  #       url: https://download.docker.com/linux/ubuntu/gpg
+  #       keyring: "{{ docker_key_file }}"
+
+  #   - name: Add apt repository for docker
+  #     ansible.builtin.apt_repository:
+  #       state: present
+  #       repo: >-
+  #         deb [arch={{ ansible_architecture }} signed-by={{ docker_key_file }}]
+  #         https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} main
+  #       filename: "{{ docker_sourcelist_name }}"
+
+- name: Install docker
+  become: true
+  ansible.builtin.apt:
+    state: present
+    update_cache: true
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin

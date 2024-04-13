@@ -1,3 +1,4 @@
+# code: language=ansible
 - name: Neovim setup
   hosts: localhost
   connection: local

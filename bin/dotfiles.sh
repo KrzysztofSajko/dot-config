@@ -12,7 +12,7 @@ SSH_PASS=""
 # Ansible setup
 ANSIBLE_REPOSITORY="ppa:ansible/ansible"
 ANSIBLE_DIR="${DIRNAME}/../ansible"
-ANSIBLE_MAIN_PLAYBOOK="main.ansible.yaml"
+ANSIBLE_MAIN_PLAYBOOK="main.yaml"
 
 PYTHON_VERSION="python3.12"
 PYTHON_REPOSITORY="ppa:deadsnakes/ppa"
@@ -76,7 +76,7 @@ function runAnsiblePlaybooks(){
 function createSSHKey(){
     local filename=$1
     ssh-keygen -t "${SSH_TYPE}" -f "${filename}" -N "${SSH_PASS}" -C "$USER/$HOSTNAME"
-    chmod 600 "${$1}"
+    chmod 600 "${1}"
 }
 
 function setupSSH(){
