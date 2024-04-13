@@ -67,6 +67,12 @@
         path: "{{ playbook_dir }}/{{ config_path }}/starship.toml"
       register: starship_config
 
+    - name: Ensure .config exists
+      ansible.builtin.file:
+        path: ~/.config
+        state: directory
+        mode: "755"
+
     - name: Create link to starship config in .config
       ansible.builtin.file:
         path: ~/.config/starship.toml
