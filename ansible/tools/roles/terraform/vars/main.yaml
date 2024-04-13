@@ -1,3 +1,2 @@
 # code: language=ansible
-terraform_key_file: /usr/share/keyrings/hashicorp-archive-keyring.gpg
-terraform_sourcelist_name: hashicorp
+terraform_hashicorp_uri: https://apt.releases.hashicorp.com
