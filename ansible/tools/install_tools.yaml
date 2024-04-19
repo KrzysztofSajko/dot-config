@@ -12,3 +12,8 @@
       ansible.builtin.include_role:
         name: docker
       when: install_docker is defined and install_docker
+
+    - name: Install kubectl
+      ansible.builtin.include_role:
+        name: kubectl
+      when: install_kubectl is defined and install_kubectl

@@ -1,0 +1,4 @@
+# code: language=ansible
+kubectl_kubernetes_version: v1.30
+kubectl_uri: https://pkgs.k8s.io/core:/stable:/{{ kubectl_kubernetes_version }}/deb/
+kubectl_signed_by: "{{ kubectl_uri }}/Release.key"
