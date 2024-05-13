@@ -8,3 +8,4 @@
   vars:
     install_terraform: true
     install_docker: true
+    install_fnm: true
