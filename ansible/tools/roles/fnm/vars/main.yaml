@@ -1,0 +1,2 @@
+fnm_download_url: https://fnm.vercel.app/install
+fnm_download_dir: $HOME/.local/share/fnm

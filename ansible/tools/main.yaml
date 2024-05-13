@@ -12,3 +12,8 @@
       ansible.builtin.include_role:
         name: docker
       when: install_docker is defined and install_docker
+
+    - name: Install fnm
+      ansible.builtin.include_role:
+        name: fnm
+      when: install_fnm is defined and install_fnm
