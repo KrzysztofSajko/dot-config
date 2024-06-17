@@ -17,3 +17,8 @@
       ansible.builtin.include_role:
         name: fnm
       when: install_fnm is defined and install_fnm
+
+    - name: Install trivy
+      ansible.builtin.include_role:
+        name: trivy
+      when: install_trivy is defined and install_trivy
