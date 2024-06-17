@@ -1,0 +1,17 @@
+# code: language=ansible
+- name: Setup AquaSecurity repo in apt
+  become: true
+  ansible.builtin.deb822_repository:
+    name: trivy
+    types: deb
+    uris: "{{ trivy_aquaspace_uri }}"
+    signed_by: "{{ trivy_aquaspace_uri }}/public.key"
+    suites: "{{ ansible_distribution_release }}"
+    components: main
+
+- name: Install trivy
+  become: true
+  ansible.builtin.apt:
+    state: present
+    update_cache: true
+    name: trivy

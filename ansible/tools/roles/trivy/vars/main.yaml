@@ -1,0 +1,2 @@
+# code: language=ansible
+trivy_aquaspace_uri: https://aquasecurity.github.io/trivy-repo/deb
