@@ -1,0 +1,17 @@
+# code: language=ansible
+- name: Main setup
+  hosts: localhost
+  connection: local
+  vars:
+    ansible_python_interpreter: ../.venv/bin/python
+  tasks:
+    - name: Get list of roles
+      ansible.builtin.find:
+        paths: ./roles
+        file_type: directory
+      register: available_roles
+
+    - name: Include roles
+      ansible.builtin.include_role:
+        name: "{{ item }}"
+      loop: "{{ available_roles.files | map(attribute='path') | map('regex_replace', 'roles/', '') }}"
