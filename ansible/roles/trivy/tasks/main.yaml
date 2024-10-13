@@ -12,6 +12,7 @@
 - name: Install trivy
   become: true
   ansible.builtin.apt:
-    state: present
-    update_cache: true
     name: trivy
+    state: latest
+    only_upgrade: true
+    update_cache: true

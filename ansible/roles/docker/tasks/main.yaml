@@ -12,7 +12,8 @@
 - name: Install docker
   become: true
   ansible.builtin.apt:
-    state: present
+    state: latest
+    only_upgrade: true
     update_cache: true
     pkg:
       - docker-ce

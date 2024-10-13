@@ -1,8 +1,4 @@
 # code: language=ansible
-- name: Print info
-  ansible.builtin.debug:
-    msg: Using starship config [{{ starship_config_path | realpath }}]
-
 - name: Get latest starship release
   community.general.github_release:
     user: starship
