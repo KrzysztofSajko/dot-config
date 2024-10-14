@@ -73,7 +73,7 @@ function runAnsiblePlaybooks(){
     # would be less annoying, however
     # running it with sudo somehow fucks things up
     # so here we are
-    ansible-playbook "${ANSIBLE_DIR}/${ANSIBLE_MAIN_PLAYBOOK}" --extra-vars "@${ANSIBLE_PROFILE_DIR}/${ANSIBLE_PROFILE}.yaml" -K
+    ansible-playbook "${ANSIBLE_DIR}/${ANSIBLE_MAIN_PLAYBOOK}" --extra-vars "@${ANSIBLE_PROFILES_DIR}/${ANSIBLE_PROFILE}.yaml" -K
 }
 
 function createSSHKey(){
