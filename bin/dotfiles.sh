@@ -12,7 +12,9 @@ SSH_PASS=""
 # Ansible setup
 ANSIBLE_REPOSITORY="ppa:ansible/ansible"
 ANSIBLE_DIR="${DIRNAME}/../ansible"
-ANSIBLE_MAIN_PLAYBOOK="main.yaml"
+ANSIBLE_MAIN_PLAYBOOK="main-setup.yaml"
+ANSIBLE_PROFILES_DIR="${ANSIBLE_DIR}/profiles"
+ANSIBLE_PROFILE="default"
 
 PYTHON_VERSION="python3.12"
 PYTHON_REPOSITORY="ppa:deadsnakes/ppa"
@@ -71,7 +73,7 @@ function runAnsiblePlaybooks(){
     # would be less annoying, however
     # running it with sudo somehow fucks things up
     # so here we are
-    ansible-playbook "${ANSIBLE_DIR}/${ANSIBLE_MAIN_PLAYBOOK}" -K
+    ansible-playbook "${ANSIBLE_DIR}/${ANSIBLE_MAIN_PLAYBOOK}" --extra-vars "@${ANSIBLE_PROFILE_DIR}/${ANSIBLE_PROFILE}.yaml" -K
 }
 
 function createSSHKey(){

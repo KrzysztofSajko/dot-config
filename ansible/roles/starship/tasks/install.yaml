@@ -1,0 +1,73 @@
+# code: language=ansible
+- name: Get latest starship release
+  community.general.github_release:
+    user: starship
+    repo: starship
+    action: latest_release
+  register: starship_latest
+
+- name: Set starship latest version
+  ansible.builtin.set_fact:
+    starship_latest_version: "{{ starship_latest.tag[1:] }}"
+
+- name: Get current starship version
+  ansible.builtin.command:
+    cmd: "starship --version"
+  register: starship_local
+  changed_when: true
+  failed_when: false
+
+- name: Set starship local version
+  ansible.builtin.set_fact:
+    starship_local_version: "{{ starship_local.stdout.split('\n')[0].split(' ')[1] }}"
+  when: starship_local.rc == 0
+
+- name: Install starship
+  become: true
+  when: starship_local.rc != 0 or starship_latest_version is version(starship_local_version, '>')
+  block:
+    - name: Make tmp file
+      ansible.builtin.tempfile:
+        state: file
+      register: starship_install_file
+
+    - name: Get install script
+      ansible.builtin.get_url:
+        url: https://starship.rs/install.sh
+        dest: "{{ starship_install_file.path }}"
+        mode: "0755"
+        force: true
+
+    - name: Run installation script
+      ansible.builtin.script:
+        cmd: "{{ starship_install_file.path }} -y"
+
+  always:
+    - name: Cleanup tmp file
+      ansible.builtin.file:
+        state: absent
+        path: "{{ starship_install_file.path }}"
+      when: starship_install_file.path is defined
+
+- name: Add entry to bashrc
+  ansible.builtin.lineinfile:
+    path: "$HOME/.bashrc"
+    line: 'eval "$(starship init bash)" # managed by Ansible'
+
+- name: Check if starship.toml exists
+  ansible.builtin.stat:
+    path: "{{ starship_config_path }}/starship.toml"
+  register: starship_config
+
+- name: Ensure .config exists
+  ansible.builtin.file:
+    path: ~/.config
+    state: directory
+    mode: "755"
+
+- name: Create link to starship config in .config
+  ansible.builtin.file:
+    path: ~/.config/starship.toml
+    state: link
+    src: "{{ starship_config.stat.path }}"
+  when: starship_config.stat.exists

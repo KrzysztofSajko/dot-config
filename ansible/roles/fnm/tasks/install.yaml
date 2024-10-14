@@ -1,0 +1,39 @@
+# code: language=ansible
+- name: Install fnm
+  block:
+    - name: Install prerequisites
+      become: true
+      ansible.builtin.apt:
+        state: present
+        name:
+          - curl
+          - unzip
+    - name: Make tmp file
+      ansible.builtin.tempfile:
+        state: file
+      register: fnm_install_file
+    - name: Get installation script
+      ansible.builtin.get_url:
+        url: "{{ fnm_download_url }}"
+        dest: "{{ fnm_install_file.path }}"
+        mode: "0755"
+        force: true
+    - name: Run installation script
+      ansible.builtin.script:
+        cmd: '{{ fnm_install_file.path }} --skip-shell --install-dir "{{ fnm_download_dir }}"'
+    - name: Add entry to bashrc
+      ansible.builtin.blockinfile:
+        state: present
+        path: "$HOME/.bashrc"
+        append_newline: true
+        prepend_newline: true
+        block: |
+          # fnm
+          export PATH="{{ fnm_download_dir }}:$PATH"
+          eval "$(fnm env --use-on-cd)"
+  always:
+    - name: Cleanup tmp file
+      ansible.builtin.file:
+        state: absent
+        path: "{{ fnm_install_file.path }}"
+      when: fnm_install_file.path is defined

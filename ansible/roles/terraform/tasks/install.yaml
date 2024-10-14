@@ -1,0 +1,18 @@
+# code: language=ansible
+- name: Setup Hashicorp repo in apt
+  become: true
+  ansible.builtin.deb822_repository:
+    name: hashicorp
+    types: deb
+    uris: "{{ terraform_hashicorp_uri }}"
+    signed_by: "{{ terraform_hashicorp_uri }}/gpg"
+    suites: "{{ ansible_distribution_release }}"
+    components: main
+
+- name: Install terraform
+  become: true
+  ansible.builtin.apt:
+    name: terraform
+    state: latest
+    only_upgrade: true
+    update_cache: true

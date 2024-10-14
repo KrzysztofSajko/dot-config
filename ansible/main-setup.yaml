@@ -14,4 +14,4 @@
     - name: Include roles
       ansible.builtin.include_role:
         name: "{{ item }}"
-      loop: "{{ available_roles.files | map(attribute='path') | map('regex_replace', 'roles/', '') }}"
+      loop: "{{ available_roles.files | map(attribute='path') | sort() | map('regex_replace', 'roles/', '') }}"
