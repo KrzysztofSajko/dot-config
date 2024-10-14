@@ -1,0 +1,37 @@
+# code: language=ansible
+- name: Download package
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    dest: /opt
+    remote_src: true
+  register: package
+
+- name: Add entry to bashrc
+  ansible.builtin.lineinfile:
+    path: "$HOME/.bashrc"
+    line: 'export PATH="$PATH:/opt/nvim-linux64/bin" # managed by Ansible'
+
+- name: Check if neovim config exists
+  ansible.builtin.stat:
+    path: "{{ neovim_config_path }}"
+  register: neovim_config
+
+- name: Ensure .config exists
+  ansible.builtin.file:
+    path: ~/.config
+    state: directory
+    mode: "755"
+
+- name: Ensure gcc exists
+  become: true
+  ansible.builtin.apt:
+    name: build-essential
+    state: present
+
+- name: Create link to neovim config in .config
+  ansible.builtin.file:
+    path: ~/.config/nvim
+    state: link
+    src: "{{ neovim_config.stat.path }}"
+  when: neovim_config.stat.exists

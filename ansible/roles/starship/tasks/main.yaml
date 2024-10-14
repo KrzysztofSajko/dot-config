@@ -1,0 +1,5 @@
+# code: language=ansible
+- name: Include installation tasks
+  ansible.builtin.include_tasks:
+    file: install.yaml
+  when: install_starship is defined and install_starship

@@ -20,7 +20,7 @@
         force: true
     - name: Run installation script
       ansible.builtin.script:
-        cmd: "{{ fnm_install_file.path }} --skip-shell --install-dir \"{{ fnm_download_dir }}\""
+        cmd: '{{ fnm_install_file.path }} --skip-shell --install-dir "{{ fnm_download_dir }}"'
     - name: Add entry to bashrc
       ansible.builtin.blockinfile:
         state: present

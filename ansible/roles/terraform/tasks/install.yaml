@@ -12,6 +12,7 @@
 - name: Install terraform
   become: true
   ansible.builtin.apt:
-    state: present
-    update_cache: true
     name: terraform
+    state: latest
+    only_upgrade: true
+    update_cache: true

@@ -1,0 +1,6 @@
+install_docker: true
+install_fnm: true
+install_neovim: true
+install_starship: true
+install_terraform: true
+install_trivy: true
