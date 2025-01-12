@@ -16,7 +16,7 @@ ANSIBLE_MAIN_PLAYBOOK="main-setup.yaml"
 ANSIBLE_PROFILES_DIR="${ANSIBLE_DIR}/profiles"
 ANSIBLE_PROFILE="default"
 
-PYTHON_VERSION="python3.12"
+PYTHON_VERSION="python3.13"
 PYTHON_REPOSITORY="ppa:deadsnakes/ppa"
 VENV_DIR="${DIRNAME}/../.venv"
 REQUIREMENTS_PATH="${ANSIBLE_DIR}/requirements.txt"
