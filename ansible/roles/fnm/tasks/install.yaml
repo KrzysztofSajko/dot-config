@@ -27,8 +27,8 @@
         path: "$HOME/.bashrc"
         append_newline: true
         prepend_newline: true
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR [fnm]"
         block: |
-          # fnm
           export PATH="{{ fnm_download_dir }}:$PATH"
           eval "$(fnm env --use-on-cd)"
   always:
