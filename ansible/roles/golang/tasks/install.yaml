@@ -1,0 +1,43 @@
+# code: language=ansible
+- name: Check if golang installed
+  ansible.builtin.command:
+    cmd: "go version"
+  register: golang_version_raw
+  changed_when: true
+  failed_when: false
+
+- name: Parse version
+  ansible.builtin.set_fact:
+    golang_version: "{{ golang_version_raw.stdout.split(' ')[2][2:] }}"
+  when: golang_version_raw.rc == 0
+
+- name: Print version
+  ansible.builtin.debug:
+    msg: "Found go version [{{ golang_version }}]"
+  when: golang_version_raw.rc == 0
+
+- name: Install or update golang
+  become: true
+  when: golang_version_raw.rc != 0 or golang_version is version(golang_expected_version, '<')
+  block:
+    - name: Remove current install
+      ansible.builtin.file:
+        state: absent
+        path: /usr/local/go
+
+    - name: Download and extract archive
+      ansible.builtin.unarchive:
+        src: "{{ golang_download_link }}"
+        dest: /usr/local
+        remote_src: true
+
+- name: Add entry to bashrc
+  ansible.builtin.blockinfile:
+    state: present
+    path: "$HOME/.bashrc"
+    append_newline: true
+    prepend_newline: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR [golang]"
+    block: |
+      export PATH="${PATH}:/usr/local/go/bin"
+      export GOPATH="$HOME/.local/share/go"
