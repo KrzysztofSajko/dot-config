@@ -45,7 +45,7 @@ function setupPythonForAnsible(){
         echo "[-] Python [${PYTHON_VERSION}] not found, installing..."
         sudo add-apt-repository ppa:deadsnakes/ppa --yes
         sudo apt update
-        sudo apt install ${PYTHON_VERSION} ${PYTHON_VERSION}-venv python3-debian
+        sudo apt install -y ${PYTHON_VERSION} ${PYTHON_VERSION}-venv python3-debian
     fi
     # ensure venv created
     if [ -d "${VENV_DIR}" ]
@@ -94,16 +94,6 @@ function setupSSH(){
         createSSHKey "${ID_FILE}"
         cat "${ID_FILE}.pub" >> "${SSH_DIR}/authorized_keys"
         chmod 600 "${SSH_DIR}/authorized_keys"
-    fi
-    local VCS_FILE="${SSH_DIR}/vcs"
-    if [ -f "${VCS_FILE}" ]
-    then
-        echo "[+] VCS ssh key already exists"
-    else
-        echo "[-] Generating new VCS SSH key with type [${SSH_TYPE}]"
-        createSSHKey "${VCS_FILE}"
-        echo "IdentityFile ${VCS_FILE}" >> "${SSH_DIR}/config"
-        chmod 600 "${SSH_DIR}/config"
     fi
 }
 
