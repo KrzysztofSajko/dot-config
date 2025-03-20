@@ -13,7 +13,6 @@
   become: true
   ansible.builtin.apt:
     state: latest
-    only_upgrade: true
     update_cache: true
     pkg:
       - docker-ce

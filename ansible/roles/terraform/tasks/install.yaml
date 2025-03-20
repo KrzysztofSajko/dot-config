@@ -14,5 +14,4 @@
   ansible.builtin.apt:
     name: terraform
     state: latest
-    only_upgrade: true
     update_cache: true
