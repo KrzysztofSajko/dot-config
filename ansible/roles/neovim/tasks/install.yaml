@@ -2,7 +2,7 @@
 - name: Download package
   become: true
   ansible.builtin.unarchive:
-    src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    src: https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
     dest: /opt
     remote_src: true
   register: package
